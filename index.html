@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Semanal - 11 a 17/07</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .summary ul {
+            list-style: none;
+        }
+
+        .summary li {
+            background: rgba(255, 255, 255, 0.7);
+            margin: 8px 0;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+            transition: transform 0.3s ease;
+        }
+
+        .summary li:hover {
+            transform: translateX(5px);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metric-card .icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .metric-item:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .positive {
+            color: #27ae60;
+        }
+
+        .negative {
+            color: #e74c3c;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #a8e6cf, #88d8c0);
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 3px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Relatório Semanal</h1>
+            <p>Período: 11 a 17 de Julho de 2024</p>
+        </div>
+
+        <div class="main-content">
+            <div class="summary">
+                <h2>🎯 Resumo da Semana</h2>
+                <ul>
+                    <li>📉 Fechamos a semana em negativo</li>
+                    <li>📊 Bom volume de vendas (600 pedidos) mas baixo ticket médio (R$ 192)</li>
+                    <li>⚠️ Situação do gel ainda não normalizada: aumento de reclamação, reembolsos</li>
+                    <li>🎯 Ajustamos todos os ads que apareciam nomes/imagens de marcas</li>
+                    <li>🎬 Ensaio dos novos produtos feitos e esteira de aquecimento em andamento</li>
+                    <li>🔥 Subimos na quinta a oferta de 24% off em "shadow"</li>
+                    <li>📱 Influs testando novos produtos - +100 reposts na semana no Instagram</li>
+                </ul>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h3><span class="icon">💰</span>Financeiro</h3>
+                    <div class="metric-item">
+                        <span class="metric-label">Faturamento Total</span>
+                        <span class="metric-value">R$ 115.748,13</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Ticket Médio</span>
+                        <span class="metric-value">R$ 192,91</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Conversão do Checkout</span>
+                        <span class="metric-value positive">41,79%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Clientes Recorrentes</span>
+                        <span class="metric-value">26,15%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Vendas Totais</span>
+                        <span class="metric-value highlight">600</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Lucro</span>
+                        <span class="metric-value negative">-R$ 8.218,05</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Margem de Lucro</span>
+                        <span class="metric-value negative">-7,10%</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h3><span class="icon">💳</span>Métodos de Pagamento</h3>
+                    <div class="metric-item">
+                        <span class="metric-label">Vendas via Pix</span>
+                        <span class="metric-value">49,85%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 49.85%"></div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Vendas via Cartão</span>
+                        <span class="metric-value">49,85%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 49.85%"></div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Conversão de Pix</span>
+                        <span class="metric-value positive">85,62%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Cartões Recusados</span>
+                        <span class="metric-value">0,59%</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h3><span class="icon">🎯</span>Origens de Venda</h3>
+                    <div class="metric-item">
+                        <span class="metric-label">Facebook</span>
+                        <span class="metric-value">46,72%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 46.72%"></div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Tráfego Orgânico</span>
+                        <span class="metric-value">30,33%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30.33%"></div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Google</span>
+                        <span class="metric-value">15,56%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 15.56%"></div>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">SalesArmy</span>
+                        <span class="metric-value">2,28%</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h3><span class="icon">🛠️</span>Suporte & Ocorrências</h3>
+                    <div class="metric-item">
+                        <span class="metric-label">Total de Ocorrências</span>
+                        <span class="metric-value">21 (3,5%)</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Reenvios</span>
+                        <span class="metric-value">6 (1,00%)</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Reembolsos Totais</span>
+                        <span class="metric-value">9 (1,50%)</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Reembolsos Parciais</span>
+                        <span class="metric-value">5 (0,83%)</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Reembolso 50%</span>
+                        <span class="metric-value">1 (0,17%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3>📱 Social Media</h3>
+                <div class="metric-item">
+                    <span class="metric-label">Posts Instagram</span>
+                    <span class="metric-value">8 (2 agendados)</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Posts TikTok</span>
+                    <span class="metric-value">6 (2 agendados)</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Stories Total</span>
+                    <span class="metric-value">127</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Reposts</span>
+                    <span class="metric-value highlight">102</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3>🎬 Produção de Conteúdo</h3>
+                <div class="metric-item">
+                    <span class="metric-label">Vídeos Produzidos</span>
+                    <span class="metric-value">11</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Assets Infra</span>
+                    <span class="metric-value">1</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Criativos Estáticos</span>
+                    <span class="metric-value">10</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Scripts Novos</span>
+                    <span class="metric-value">10</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3>🧪 Testes de Anúncios</h3>
+                <div class="metric-item">
+                    <span class="metric-label">Testes em Andamento</span>
+                    <span class="metric-value">11</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Total Testados</span>
+                    <span class="metric-value">12</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Validados</span>
+                    <span class="metric-value positive">1</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Melhor Performance</span>
+                    <span class="metric-value">[Lip Gloss] @ingridscata - ROAS 2,62</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h3>🏷️ Categorias de Conteúdo</h3>
+                <div>
+                    <span class="tag">Flash Sale 24% OFF</span>
+                    <span class="tag">Lançamento - Aquecimento</span>
+                    <span class="tag">TOFUs Gel</span>
+                    <span class="tag">TOFUs S-Control</span>
+                    <span class="tag">Testes Influs</span>
+                    <span class="tag">Prospecção</span>
+                    <span class="tag">TikTok Shop</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animação para as barras de progresso
+        window.addEventListener('load', function() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+        });
+
+        // Animação de hover para os cards
+        const cards = document.querySelectorAll('.metric-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
